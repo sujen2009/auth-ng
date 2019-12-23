@@ -6,6 +6,7 @@ import {
   HttpEvent
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie';
 
 /**
  * HTTP Interceptor to add an Authorization header to all outgoing
@@ -20,7 +21,9 @@ export class AuthHeaderInterceptor implements HttpInterceptor {
    *
    * @param sessionService Used to retrive the token from the user's cookies
    */
-  constructor() {}
+  constructor(
+    private readonly cookieService: CookieService
+  ) {}
 
   /**
    * Adds the Authorization header if a user token is set in the cookies.
@@ -33,7 +36,7 @@ export class AuthHeaderInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
       //tslint:disable
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTAwN2U5ZDg5Zjc5YjYxNjQ4NDRlNTAiLCJpYXQiOjE1NzcwOTA3NTR9.DVDpmUxc6OvOMG9-5GPY2AMDauIG20FC_b4g61Gu0i0';
+      const token = this.cookieService.get('token');
        // tslint:enable
       const newRequest = request.clone({
         setHeaders: {

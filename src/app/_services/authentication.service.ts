@@ -30,7 +30,10 @@ export class AuthenticationService {
                 // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
                 user.authdata = window.btoa(username + ':' + password);
                 this.cookieService.put('token', user.token, {
-                    domain: 'parknepa.com.np'
+                    domain: 'starter.openshift-online.com'
+                });
+                this.cookieService.put('testToken', user.token, {
+                    domain: 'starter.openshift-online.com'
                 });
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);

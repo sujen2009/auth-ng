@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log(this.cookieService.get('token'));
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required]
@@ -56,7 +57,7 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    window.location.href = 'http://parking-ng-parking-node.apps.us-west-1.starter.openshift-online.com/parkings';
+                    // window.location.href = 'http://parking-ng-parking-node.apps.us-west-1.starter.openshift-online.com/parkings';
                 },
                 error => {
                     this.error = error.error.message;

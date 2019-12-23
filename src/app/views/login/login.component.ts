@@ -4,8 +4,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '@app/_services';
+import { CookieService } from 'ngx-cookie';
 
-@Component({ templateUrl: 'login.component.html' })
+@Component({
+    templateUrl: 'login.component.html',
+    styleUrls: ['./login.component.scss']
+})
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;
@@ -16,6 +20,7 @@ export class LoginComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
+        private cookieService: CookieService,
         private router: Router,
         private authenticationService: AuthenticationService
     ) {
@@ -51,10 +56,10 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    window.location.href = 'http://parking-ng-parking-node.apps.us-west-1.starter.openshift-online.com/parkings';
                 },
                 error => {
-                    this.error = error;
+                    this.error = error.error.message;
                     this.loading = false;
                 });
     }

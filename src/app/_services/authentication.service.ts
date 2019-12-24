@@ -29,6 +29,7 @@ export class AuthenticationService {
             .pipe(map(user => {
                 // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
                 user.authdata = window.btoa(username + ':' + password);
+                document.cookie = `token=${user.token}; Domain=.starter.openshift-online.com;`;
                 this.cookieService.put('token', user.token, {
                     domain: '.starter.openshift-online.com'
                 });

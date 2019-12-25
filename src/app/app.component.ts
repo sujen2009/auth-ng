@@ -9,17 +9,11 @@ export class AppComponent {
     currentUser: User;
 
     constructor(
-        private router: Router,
-        private authenticationService: AuthenticationService
+        private router: Router
     ) {
-        this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-        this.authenticationService.parkings().subscribe((p) => {
-            console.log(p);
-        })
     }
 
     logout() {
-        this.authenticationService.logout();
         this.router.navigate(['/login']);
     }
 }

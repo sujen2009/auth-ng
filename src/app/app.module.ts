@@ -12,6 +12,7 @@ import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { AuthHeaderInterceptor } from './interceptors/auth-header.interceptor';
 import { CookieModule } from 'ngx-cookie';
+import { AuthenticationGuard } from './guards/authGuard';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import { CookieModule } from 'ngx-cookie';
 ,
         RegisterComponent    ],
     providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: AuthHeaderInterceptor, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: AuthHeaderInterceptor, multi: true },
+        AuthenticationGuard
     ],
     bootstrap: [AppComponent]
 })

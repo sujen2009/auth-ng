@@ -28,13 +28,7 @@ export class AuthenticationService {
         return this.http.post<any>(`${environment.apiUrl}/auth`, { username, password })
             .pipe(map(user => {
                 // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
-                user.authdata = window.btoa(username + ':' + password);
                 document.cookie = `token=${user.token}; Domain=.starter.openshift-online.com;`;
-                this.cookieService.put('token', user.token, {
-                    domain: '.starter.openshift-online.com'
-                });
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.currentUserSubject.next(user);
                 return user;
             }));
     }
@@ -43,14 +37,7 @@ export class AuthenticationService {
         return this.http.post<any>(`${environment.apiUrl}/auth/register`, userParams)
             .pipe(map(user => {
                 // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
-                user.authdata = window.btoa(userParams.username + ':' + userParams.password);
-                console.log('token', user.token);
-                this.cookieService.put('token', user.token);
-                this.cookieService.put('token', user.token, {
-                    domain: 'parknepa.com.np'
-                });
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.currentUserSubject.next(user);
+                document.cookie = `token=${user.token}; Domain=.starter.openshift-online.com;`;
                 return user;
             }));
     }

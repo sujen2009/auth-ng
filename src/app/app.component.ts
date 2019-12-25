@@ -9,7 +9,7 @@ export class AppComponent {
     currentUser: User;
 
     constructor(
-        private router: Router
+        private readonly router: Router
     ) {
     }
 

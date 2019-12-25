@@ -6,23 +6,16 @@ import { RegisterComponent } from './views/register/register.component';
 import { AuthenticationGuard } from './guards/authGuard';
 
 const routes: Routes = [
+
     {
-      path: '',
-      children: [
-        {
-          path: 'login',
-          component: LoginComponent
-        },
-        {
-          path: 'register',
-          component: RegisterComponent
-        },
-        {
-          path: '**',
-          component: LoginComponent
-        }
-      ],
-      canActivateChild: [AuthenticationGuard]
+        path: 'login',
+        component: LoginComponent,
+        canActivate: [AuthenticationGuard]
+    },
+    {
+        path: 'register',
+        component: RegisterComponent,
+        canActivate: [AuthenticationGuard]
     },
     {
       path: '**',

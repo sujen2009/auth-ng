@@ -17,15 +17,11 @@ export class RegisterComponent implements OnInit {
   error = '';
 
   constructor(
-      private formBuilder: FormBuilder,
-      private route: ActivatedRoute,
-      private router: Router,
-      private authenticationService: AuthenticationService
+      private readonly formBuilder: FormBuilder,
+      private readonly route: ActivatedRoute,
+      private readonly router: Router,
+      private readonly authenticationService: AuthenticationService
   ) {
-      // redirect to home if already logged in
-      if (this.authenticationService.currentUserValue) {
-          this.router.navigate(['/']);
-      }
   }
 
   ngOnInit() {

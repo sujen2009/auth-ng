@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivateChild } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
 import { UserService } from '../_services/user.service';
 import { environment } from '../../environments/environment';
 
 @Injectable()
-export class AuthenticationGuard implements CanActivateChild {
+export class AuthenticationGuard implements CanActivate {
   /**
    * Holds the URL component for the ID App.
    */
@@ -19,7 +19,7 @@ export class AuthenticationGuard implements CanActivateChild {
    * Verifies that the current user is properly authenticated, as well as authorized
    *
    */
-  public async canActivateChild(route: ActivatedRouteSnapshot): Promise<boolean> {
+  public async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
     const token = this.cookieService.get('token');
     if (!token) {
       return true;
@@ -27,7 +27,7 @@ export class AuthenticationGuard implements CanActivateChild {
     try {
       const currentUser: any = await this.userService.getCurrentUser().toPromise();
       if (currentUser && currentUser.id) {
-        this.redirectToMainApp();
+        // this.redirectToMainApp();
         return false;
       }
     } catch (error) {

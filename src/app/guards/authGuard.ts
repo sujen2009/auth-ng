@@ -27,7 +27,7 @@ export class AuthenticationGuard implements CanActivate {
     try {
       const currentUser: any = await this.userService.getCurrentUser().toPromise();
       if (currentUser && currentUser.id) {
-        // this.redirectToMainApp();
+        this.redirectToMainApp();
         return false;
       }
     } catch (error) {

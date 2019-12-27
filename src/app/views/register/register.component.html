@@ -1,74 +1,55 @@
-<div class="col-md-6 offset-md-3 mt-5">
-    <div class="card">
-        <div class="card-body">
-            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                <div class="form-group">
-                    <label for="username">First name:</label>
-                    <input 
-                    type="text" 
-                    formControlName="firstName" 
-                    class="form-control" 
-                    [ngClass]="{ 'is-invalid': submitted && formData.username.errors }" />
-                    <div *ngIf="submitted && formData.username.errors" class="invalid-feedback">
-                        <div *ngIf="formData.username.errors.required">First name is required</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="lastName">Last name:</label>
-                    <input 
-                    type="text" 
-                    formControlName="lastName"
-                     class="form-control" 
-                     [ngClass]="{ 'is-invalid': submitted && formData.username.errors }" />
-                    <div *ngIf="submitted && formData.username.errors" class="invalid-feedback">
-                        <div *ngIf="formData.username.errors.required">Last name is required</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input 
-                    type="text" 
-                    formControlName="username" 
-                    class="form-control" 
-                    [ngClass]="{ 'is-invalid': submitted && formData.username.errors }" />
-                    <div *ngIf="submitted && formData.username.errors" class="invalid-feedback">
-                        <div *ngIf="formData.username.errors.required">Username is required</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input 
-                    type="password" 
-                    formControlName="password" 
-                    class="form-control" 
-                    [ngClass]="{ 'is-invalid': submitted && formData.password.errors }" />
-                    <div *ngIf="submitted && formData.password.errors" class="invalid-feedback">
-                        <div *ngIf="formData.password.errors.required">Password is required</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password">Confirm Password:</label>
-                    <input 
-                    type="password" 
-                    formControlName="confirmPassword" 
-                    class="form-control" 
-                    [ngClass]="{ 'is-invalid': submitted && formData.password.errors }" />
-                    <div *ngIf="submitted && formData.password.errors" class="invalid-feedback">
-                        <div *ngIf="formData.password.errors.required">Confirm Password is required</div>
-                    </div>
-                </div>
-                <button [disabled]="loading" class="btn btn-primary">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Register
-                </button>
-                <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
-            </form>
-            <br />
-            <br />
-            <button routerLink="/login" [disabled]="loading" class="btn btn-primary">
-                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                <-Back
-            </button>
+<mat-card>
+    <mat-card-title>Register</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <p>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Firstname" formControlName="firstName">
+          </mat-form-field>
+          <auth-error-handler *ngIf="firstName.touched || submitted" [errors]="firstName.errors"></auth-error-handler>
+        </p>
+        <p>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Lastname" formControlName="lastName">
+          </mat-form-field>
+          <auth-error-handler *ngIf="lastName.touched || submitted" [errors]="lastName.errors"></auth-error-handler>
+        </p>
+        <p>
+          <mat-form-field>
+            <input type="email" matInput placeholder="Email" formControlName="email">
+          </mat-form-field>
+          <auth-error-handler *ngIf="email.touched || submitted" [errors]="email.errors"></auth-error-handler>
+        </p>
+        <p>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Username" formControlName="username">
+          </mat-form-field>
+          <auth-error-handler *ngIf="username.touched || submitted" [errors]="username.errors"></auth-error-handler>
+        </p>
+        <p>
+          <mat-form-field>
+            <input type="password" matInput placeholder="Password" formControlName="password">
+          </mat-form-field>
+          <auth-error-handler *ngIf="password.touched || submitted" [errors]="password.errors"></auth-error-handler>
+        </p>
+        <p>
+          <mat-form-field>
+            <input type="password" matInput placeholder="Confirm Password" formControlName="confirmPassword">
+          </mat-form-field>
+          <auth-error-handler *ngIf="confirmPassword.touched || submitted" [errors]="confirmPassword.errors"></auth-error-handler>
+        </p>
+        <p *ngIf="error" class="error">
+          {{ error }}
+        </p>
+  
+        <div class="button">
+          <button type="submit" mat-button>Register</button>
         </div>
-    </div>
-</div>
+  
+        <div>
+          <a routerLink="/login">back</a>
+      </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

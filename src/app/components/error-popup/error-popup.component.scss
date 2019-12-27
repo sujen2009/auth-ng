@@ -1,0 +1,33 @@
+:host {
+  .error-element {
+    position: relative;
+    clear: both;
+    min-height: 38px;
+  }
+
+  .error-message {
+    background-color: red;
+    color: #fff;
+    padding: 7px 15px;
+    font-size: 15px;
+
+    &:before {
+      content: ' ';
+      position: absolute;
+      border: 7px solid transparent;
+    }
+
+    &.bottom {
+      position: relative;
+      left: 0;
+      top: 7px;
+      display: inline-block;
+
+      &:before {
+        border-bottom-color: red;
+        top: -14px;
+        left: 5px;
+      }
+    }
+  }
+}

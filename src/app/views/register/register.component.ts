@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@app/_services';
 import { first } from 'rxjs/operators';
@@ -7,14 +7,28 @@ import { first } from 'rxjs/operators';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.less']
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  registerForm: FormGroup;
-  loading = false;
-  submitted = false;
-  returnUrl: string;
-  error = '';
+    public registerForm: FormGroup = new FormGroup({
+        firstName: new FormControl('', Validators.required),
+        lastName: new FormControl('', Validators.required),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        username: new FormControl('', [
+            Validators.required,
+            Validators.minLength(6)
+        ]),
+        password: new FormControl('', [
+            Validators.required,
+            Validators.minLength(6)
+        ]),
+        confirmPassword: new FormControl(''),
+    });
+    loading = false;
+    public submitted = false;
+    returnUrl: string;
+    error = '';
+
 
   constructor(
       private readonly formBuilder: FormBuilder,
@@ -25,14 +39,6 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.registerForm = this.formBuilder.group({
-          firstName: ['', Validators.required],
-          lastName: ['', Validators.required],
-          username: ['', Validators.required],
-          password: ['', Validators.required],
-          confirmPassword: ['', Validators.required]
-      });
-
       // get return url from route parameters or default to '/'
       this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
@@ -42,8 +48,10 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
     // stop here if form is invalid
+    if (this.password.value !== this.confirmPassword.value) {
+        this.confirmPassword.setErrors({ 'passwordMismatch': true });
+    }
     if (this.registerForm.invalid) {
         return;
     }
@@ -53,6 +61,7 @@ export class RegisterComponent implements OnInit {
         username: this.formData.username.value,
         password: this.formData.password.value,
         firstName: this.formData.firstName.value,
+        email: this.formData.email.value,
         lastName: this.formData.lastName.value,
     };
     this.authenticationService.register(param)
@@ -64,6 +73,30 @@ export class RegisterComponent implements OnInit {
         this.error = error;
         this.loading = false;
     });
+  }
+
+  public get firstName() {
+      return this.registerForm.get('firstName');
+  }
+
+  public get username() {
+      return this.registerForm.get('username');
+  }
+
+  public get password() {
+      return this.registerForm.get('password');
+  }
+
+  public get email() {
+      return this.registerForm.get('email');
+  }
+
+  public get lastName() {
+      return this.registerForm.get('lastName');
+  }
+
+  public get confirmPassword() {
+      return this.registerForm.get('confirmPassword');
   }
 
 }

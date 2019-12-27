@@ -1,0 +1,5 @@
+<error-popup *ngIf="errors">
+    <div *ngFor="let item of errors | keyvalue">
+        {{ item.key === 'custom' ? item.value : ('errors.' + item.key) | translate }}
+    </div>
+</error-popup>

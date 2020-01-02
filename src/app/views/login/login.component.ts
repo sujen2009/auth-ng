@@ -5,11 +5,12 @@ import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '@app/_services';
 import { CookieService } from 'ngx-cookie';
-import { environment } from '@environments/environment';
+import { FBAuthService } from '../../_services/fbAuthService';
 
 @Component({
     templateUrl: 'login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
+    providers: [ FBAuthService ]
 })
 export class LoginComponent implements OnInit {
     public loginForm: FormGroup = new FormGroup({
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
     constructor(
         private readonly route: ActivatedRoute,
         private readonly router: Router,
+        private readonly fbAuthService: FBAuthService,
         private readonly authenticationService: AuthenticationService
     ) {
         // redirect to home if already logged in
@@ -53,11 +55,17 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    window.location.href = environment.mainApp;
+                    // window.location.href = environment.mainApp;
                 },
                 error => {
                     this.error = error.error.message;
                     this.loading = false;
                 });
+    }
+
+    public loginWithFb() {
+        this.fbAuthService.fbLogin().then(() => {
+            console.log('User has been logged in');
+        });
     }
 }

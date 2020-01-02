@@ -27,6 +27,7 @@ export class AuthenticationService {
     login(username: string, password: string) {
         return this.http.post<any>(`${environment.apiUrl}/auth`, { username, password })
             .pipe(map(user => {
+                console.log(user);
                 // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
                 document.cookie = `token=${user.token}; Domain=.starter.openshift-online.com;`;
                 return user;

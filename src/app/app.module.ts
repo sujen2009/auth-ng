@@ -21,7 +21,8 @@ import {
   MatInputModule,
   MatButtonModule
 } from '@angular/material';
-import { ErrorPopupComponent } from './components/error-popup/error-popup.component';
+import { ErrorPopupComponent } from './components/error-popup/error-popup.component';;
+import { PrivacyPolicyComponent } from './views/privacy-policy/privacy-policy.component'
 
 const materialModules = [
     MatCardModule,
@@ -56,7 +57,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         ErrorHandlerComponent,
         RegisterComponent,
         ErrorPopupComponent
-    ],
+,
+        PrivacyPolicyComponent    ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: AuthHeaderInterceptor, multi: true },
         AuthenticationGuard
